@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+   <!-- <link rel="stylesheet" href="node_modules/normalize-css/normalize.css">-->
+    <script src="node_modules/.3.2.1@jquery/dist/jquery.js"></script>
+    <script src="node_modules/.1.6.3@angular/angular.js"></script>
+    <script src="node_modules/.0.4.2@angular-ui-router/release/angular-ui-router.js"></script>
+  <!--<script src="js/base.js"></script>-->
+    <style>
+        #content{
+            width: 400px;
+            margin: 5px auto;
+            background-color:#f5f5f5;
+            border: 1px solid #eee;
+            border-radius:4px;
+            padding: 15px;
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0 0 10px 0;
+        }
+    </style>
+</head>
+
+<body ng-a="helloworld">
+<!--
+<div ng-controller="home">
+
+    <p>{{name}}</p>
+
+
+    <expander class='expander' expander-title='title'>
+        {{text}}
+    </expander>
+</div>
+-->
+
+
+
+<!--111-->
+<div id="content" ng-app="todo">
+<h2>任务列表</h2>
+<div ng-controller="todoListCtrl">
+
+    <p>一共任务：{{todos.length}}</p>
+    <p>未完成任务：{{remain()}}</p>
+    <p>已完成任务：{{todos.length - remain()}}</p>
+    <ul>
+        <li ng-repeat="todo in todos">
+            <!--这个我明白le  todo在这里已经有现实意义了-->
+            <p>{{todo}}</p>
+
+            <input type="checkbox" ng-model='todo.done'>
+            <span ng-bind="todo.text"></span>
+            <button ng-click="delet()">删除</button>
+        </li>
+    </ul>
+
+    <div  class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-9">
+                <input type="text" ng-model='todoText' placeholder="填入新任务" class="form-control">
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-primary" ng-click="addTodo()">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--end-->
+
+<script>
+    var todo = angular.module('todo', []);
+    todo.controller('todoListCtrl', ['$scope', function($scope){
+
+        $scope.todos = [
+            {text:'切割图片',done:false},
+            {text:'编写页面代码',done:false},
+            {text:'编写js代码',done:false}
+        ];
+     $scope.addTodo=function () {
+         $scope.todos.push({
+             text: $scope.todoText,
+             done:false
+         })
+         $scope.todoText=''
+     }
+
+     $scope.remain=function () {
+         var i=0
+         $scope.todos.forEach(function (ele) {
+             if(!ele.done){
+                 i++
+             }
+         })
+         return i
+     }
+//这个不是很理解  后来明白了哈哈
+     $scope.delet=function () {
+         console.log(todo)
+         console.log(1)
+        //在todos数组中将当前todo删去
+         $scope.todos.splice(todo,1);
+
+     }
+    }]);
+</script>
+
+</body>
+</html>
